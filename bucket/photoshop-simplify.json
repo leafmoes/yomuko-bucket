@@ -1,0 +1,41 @@
+{
+    "version": "21.2.4.323",
+    "description": "Photoshop 精简版本",
+    "homepage": "https://od.r12.top/",
+    "license": {
+        "identifier": "Proprietary"
+    },
+    "depends": "sudo",
+    "url": "https://od.r12.top/api/raw?path=/yomuko-bucket/photoshop-simplify-21.2.4.323.exe#/dl.7z",
+    "hash": "4393a93999056bdd4067ab6b7e1f8f7132d1f6ed9dd19fa949516043867c0538",
+    "installer": {
+        "script": "sudo cmd /c \"$dir\\!)绿化.bat\""
+    },
+    "uninstaller": {
+        "script": "sudo cmd /c \"$dir\\!)卸载.bat\""
+    },
+    "bin": [
+        [
+            "Photoshop.exe",
+            "Photoshop"
+        ]
+    ],
+    "extract_dir": "Photoshop",
+    "shortcuts": [
+        [
+            "photoshop.exe",
+            "Photoshop"
+        ]
+    ],
+    "checkver": {
+        "url": "https://raw.githubusercontent.com/leafmoes/yomuko-bucket/master/versions/AdobePhotoshopCC.latest",
+        "regex": "([\\d.]+)"
+    },
+    "autoupdate": {
+        "url": "https://od.r12.top/api/raw?path=/yomuko-bucket/photoshop-simplify-$version.exe#/dl.7z",
+        "hash": {
+            "url": "$url.sha256",
+            "regex": "$sha256"
+        }
+    }
+}

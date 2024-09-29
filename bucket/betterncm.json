@@ -1,0 +1,38 @@
+{
+    "version": "1.3.3",
+    "description": "NCM 软件插件管理器",
+    "homepage": "https://github.com/MicroCBer/BetterNCM",
+    "license": {
+        "identifier": "GPL-3.0 license",
+        "url": "https://github.com/MicroCBer/BetterNCM/blob/v2/LICENSE"
+    },
+    "depends": "netease-cloudmusic",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/MicroCBer/BetterNCM/releases/download/1.3.3/BetterNCMII86.dll",
+            "hash": "73e7a3b1b4134c35227d5c8d0783a0e71ae53c66d0e415c7cb3ccab12ae39830"
+        }
+    },
+    "pre_install": "Get-ChildItem \"$dir\\Better*.dll\" | Rename-Item -NewName 'msimg32.dll'",
+    "post_install": [
+        "$current_env = Get-EnvVar -Name BETTERNCM_PROFILE -Global:$global",
+        "If ($null -eq $current_env) {",
+        "    $path = \"$dir\\data\"",
+        "    Set-EnvVar -Name BETTERNCM_PROFILE -Value $path -Global:$global",
+        "    $Env:BETTERNCM_PROFILE = $path",
+        "    Write-Host \"Environment variable 'BETTERNCM_PROFILE' set to '$path'\"",
+        "}",
+        "Copy-Item \"$dir\\msimg32.dll\" \"$(scoop prefix netease-cloudmusic)\""
+    ],
+    "persist": "data",
+    "uninstaller": {
+        "script": "Remove-Item \"$(scoop prefix netease-cloudmusic)\\msimg32.dll\""
+    },
+    "checkver": {
+        "url": "https://api.github.com/repos/MicroCBer/BetterNCM/releases/latest",
+        "regex": "(?sm)browser_download_url.*?releases/download/([\\w.-]+)/(?<file>BetterNCMII86.dll)"
+    },
+    "autoupdate": {
+        "url": "https://github.com/MicroCBer/BetterNCM/releases/download/$version/$matchFile"
+    }
+}
